@@ -1,0 +1,44 @@
+import pandas as pd
+import numpy as np
+
+df=pd.read_csv('tiatanic.csv')
+df
+
+df.head()
+
+df.tail()
+
+df.isnull().sum()
+
+df.describe()
+
+df.info()
+
+df.dtypes
+
+from sklearn.preprocessing import MinMaxScaler 
+
+df.shape
+
+def impute_age(cols):
+    Age = cols[0]
+    Pclass = cols[1]
+    
+    if pd.isnull(Age):
+        if Pclass ==1:
+            return 37
+        elif Pclass ==2:
+            return 29
+        else:
+            return 24
+    else:
+        return Age
+    
+    
+df['Age'] = df[['Age', 'Pclass']].apply(impute_age, axis=1)
+df.drop('Cabin', axis=1, inplace=True)
+df.dropna(inplace=True)
+
+df.head()
+
+df.tail()
